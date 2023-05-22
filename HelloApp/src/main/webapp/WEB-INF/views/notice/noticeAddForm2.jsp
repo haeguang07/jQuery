@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="css/modal.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-<script src="js/notice.js"></script>
+<script src="js/noticeAsync.js"></script>
+<!-- <script src="js/notice.js"></script> -->
 
 
 

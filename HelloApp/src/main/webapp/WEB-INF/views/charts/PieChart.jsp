@@ -16,9 +16,10 @@
       var result = [
         ['dept', 'cnt']
       ];
-
+	  
+      
+      
       let xhtp = new XMLHttpRequest(); //비동기식 호출 (Ajax호출)
-
       xhtp.open('get', 'chartData.do');
       xhtp.send();
       xhtp.onload = function () {
@@ -40,6 +41,7 @@
       }
 
     }
+    
   </script>
 </head>
 
