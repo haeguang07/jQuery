@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Insert title here</title>
+  <style>
+    #search{
+      width:400px;
+      height:30px;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+
+<body>
+  <p>진료소 현황</p>
+  <select name="sido" id="search" >
+    <option value="서울특별시" selected>서울특별시</option>
+  </select>
+
+  <button id="searchBtn">조회</button>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>센터id</th>
+        <th>센터명</th>
+        <th>센터주소</th>
+        <th>facilityName</th>
+      </tr>
+    </thead>
+    <tbody id="list">
+
+    </tbody>
+  </table>
+
+  <script>
+    let showFeilds = ['id', 'centerName', 'address','facilityName'];
+    let url =
+      `https://api.odcloud.kr/api/15077586/v1/centers?page=1&perPage=284&serviceKey=NGLuy0Kt%2By%2BlX1ucO3lMA7RYqj96sk%2BkNcpRAGYFib4ANGHxnfI17hsdp14SMWc3pBQrUgZOlDPwDIK9JFgKPA%3D%3D`;
+    let list = document.querySelector('#list');
+    let allCenter;
+
+    //목록 가져오기
+    fetch(url)
+      .then((resolve) => resolve.json())
+      .then((result) => {
+        console.log(result);
+        allCenter = result.data; //조회된 결과를 allCenter에 저장
+        let sidoAry = ['서울특별시']; //sido정보를 새로운 배열에 중복없이 저장;
+        //indexOf(값)=>index값,-1을 반환
+        allCenter.forEach(center => {
+          if (sidoAry.indexOf(center.sido) == -1)
+            sidoAry.push(center.sido);
+        })
+        console.log(sidoAry)
+        //sidoAry 배열을 반복해서 중복되지 않는 option를 select에 append
+        sidoAry.forEach(sido => {
+          optionList(sido);
+        })
+        result.data.forEach(element => {
+          //console.log(element);
+          let searchKey = document.querySelector('#search').value;
+          if (element.sido == searchKey) {
+            list.append(makeRow(element));
+          }
+        });
+      })
+      .catch((error) => console.log(error))
+    //클릭이벤트
+    document.querySelector('#searchBtn').addEventListener('click', function () {
+      let searchKey = document.querySelector('#search').value;
+      findList(searchKey);
+    });
+
+
+    //row한건 생성(tr하나만들기)
+    function makeRow(center = {}) {
+      let tr = document.createElement('tr');
+      for (let feild of showFeilds) { //['id', 'centerName', 'address']
+        let td = document.createElement('td');
+        td.innerText = center[feild];
+        if(feild=='address'){
+        	td.addEventListener('click',function(){
+            location.href='map.jsp?lat='+center.lat+'&lng='+center.lng+'&adr='+center.address+'&name='+center.facilityName;
+          })
+        }
+        tr.append(td);
+      }
+      return tr;
+    }
+    //시도정보 조회
+    function findList(sido = " 서울특별시") {
+      list.innerHTML = ""; //기존목록 제거;
+      allCenter.forEach(center => {
+        if (center.sido == sido) {
+          list.append(makeRow(center));
+        }
+      })
+    }
+    //시도 option에 추가
+    function optionList(sido) {
+      if(sido!='서울특별시'){
+        let option = document.createElement('option');
+        option.value = sido;
+        option.innerText = sido;
+        document.querySelector('#search').append(option);
+      }
+    }
+  </script>
+
+</body>
+
+</html>

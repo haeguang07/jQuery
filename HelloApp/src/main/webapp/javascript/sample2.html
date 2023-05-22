@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Insert title here</title>
+</head>
+
+<body>
+  <input type="text" id="fruit">
+  <button id="addbtn">추가</button>
+  <ul id="list">
+    <li>Apple</li>
+    <li>Banana</li>
+    <li>Mango</li>
+    <li>Melon</li>
+    <li>Grape</li>
+  </ul>
+
+
+  <input type="text" name="userId" value="user">
+  <input type="text" name="userNqme">
+  <button id="tBtn">추가</button>
+
+  <table id="tbl">
+    <tbody id="tlist">
+      <tr>
+        <td>user01</td>
+        <td>Hong</td>
+      </tr>
+    </tbody>
+
+  </table>
+
+  <script>
+    document.getElementById('addbtn').addEventListener('click', function () {
+      let val = document.getElementById('fruit').value;
+      let li = document.createElement('li'); //<li></li>
+      li.innerText = val;
+      document.getElementById('list').append(li);
+    })
+    
+    
+    
+    
+    document.querySelector('#tBtn').addEventListener('click', function () {
+      let tr = document.createElement('tr');//tr= <tr></tr>
+      let td = document.createElement('td');
+      td.innerText=document.querySelector('input[name="userId"]').value;
+      tr.appendChild(td);
+      td = document.createElement('td');
+      td.innerText=document.querySelector('input[name="userNqme"]').value;
+      tr.appendChild(td);
+      document.querySelector('#tlist').append(tr);
+      
+    })
+    
+    document.querySelectorAll('li').forEach(item=>{
+    	item.addEventListener('click',function(){
+    		item.remove();
+    	})
+    })
+  </script>
+</body>
+
+</html>

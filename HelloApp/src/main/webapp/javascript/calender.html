@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>calender.html</title>
+  <style>
+    #show {
+      display: inline-block;
+      width: 400px;
+      height: 400px;
+      background-color: yellow;
+    }
+
+    #show span {
+      display: inline-block;
+      width: 90px;
+      height: 30px;
+      background-color: aqua;
+      text-align: center;
+      margin: 2px;
+    }
+
+    table {
+      border: 2px solid black;
+    }
+
+    td {
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      border: 1px solid;
+    }
+
+    .blue {
+      color: blue;
+    }
+
+    .red {
+      color: red;
+    }
+
+    caption {
+      font-weight: 700;
+      font-size: 2em;
+    }
+  </style>
+</head>
+
+<body>
+  <input type="text" id="words">
+  <button id="btn">검색삭제</button>
+  <p id="time">남은 시간: 60초</p>
+  <div id="show">
+
+  </div>
+
+
+  <!--<script src="calender.js"></script>-->
+  <script src="calender2.js"></script>
+  <script>
+    let num = 60;
+    var isStop = true;
+    var interval = setInterval(function () {
+      if (isStop) {
+        num -= 1;
+        document.querySelector('#time').innerText = "남은 시간: " + num + "초";
+        if (num == 0) {
+          alert('실패');
+          clearInterval(interval);
+        }
+      } else {
+        clearInterval(interval);
+      }
+    }, 1000)
+
+    let div = document.querySelector('#show');
+    let words =
+      `Lorem ipsum dolor`;
+    for (let word of words.split(' ')) {
+      let span = document.createElement('span');
+      span.innerText = word;
+      div.append(span);
+    }
+    let btn = document.querySelector('#btn');
+    let word = document.querySelector('#words');
+    word.addEventListener('change', function () {
+
+      div.childNodes.forEach(item => {
+        if (item.innerText == this.value) {
+          item.remove();
+        }
+        if (div.childNodes.length == 1) {
+          isStop = false;
+          alert('성공');
+        }
+      })
+      this.value = '';
+    })
+  </script>
+</body>
+
+</html>

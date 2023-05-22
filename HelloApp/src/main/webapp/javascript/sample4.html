@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<p>sample4.html</p>
+	<table>
+	<tr><th>id</th><th>lname</th>salary</tr>
+	</table>
+	<ul id="list">
+	</ul>
+	<script>
+	//비동기식 처리
+	//XMLHttpRequest
+	let xht = new XMLHttpRequest();
+	xht.open('get','MOCK_DATA.json');
+	xht.send();
+	xht.onload =function(){
+		//console.log(JSON.parse(xht.response));
+	}
+	//fetch
+	fetch('MOCK_DATA.json')
+	.then(function(resolve){//성공하면 실행하는 함수,relolve->성공시 결과값
+		console.log('success');
+		return resolve.texts();
+	},function(){//실패하면 실행하는 함수
+		console.log('error');
+	})
+	.then(function(result){
+		console.log('success',result);
+	},function(error){
+		console.log('error',error);
+	})
+	
+	fetch('MOCK_DATA.json')
+	.then((resolve)=>resolve.json()) //function생략 가능 ,생략시=>사용 return생략
+	.then((result)=>{				 //처리내용이 한줄이면 중괄호도 생략가능
+		console.log(result);
+		for(let i=0;i<result.length;i++){
+			let ul= document.querySelector('#list')
+			let li= document.createElement('li');
+			li.innerText=result[i].id;
+			ul.append(li);
+			li=document.createElement('li');
+			li.innerText=result[i].last_name;
+			ul.append(li);
+			li=document.createElement('li');
+			li.innerText=result[i].salary;
+			ul.append(li);
+		}
+		} ) 
+	.catch((error)=>console.log(error))
+	
+	</script>
+</body>
+</html>

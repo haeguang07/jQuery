@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>webapp/jquery/index.html</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <script src="basic1.js"></script>
+  <script src="fetchMember.js"></script>
+
+</head>
+
+<body>
+  <ul id="list">
+    <li>Apple</li>
+    <li>Banana</li>
+  </ul>
+  <table>
+    <tr>
+      <th>ID</th>
+      <td><input type="text" name="id" id="id"></td>
+    </tr>
+    <tr>
+      <th>이름</th>
+      <td><input type="text" name="firstName" id="firstName"></td>
+    </tr>
+    <tr>
+      <th>성</th>
+      <td><input type="text" name="lastName" id="lastName"></td>
+    </tr>
+    <tr>
+      <th>성별</th>
+      <td><select name="gender" id="gender">
+          <option value="Male">남성</option>
+          <option value="Female">여성</option>
+        </select></td>
+    </tr>
+    <tr>
+      <th>이메일</th>
+      <td><input type="text" name="email" id="email"></td>
+    </tr>
+    <tr>
+      <th>급여</th>
+      <td><input type="text" name="salary" id="salary"></td>
+    </tr>
+    <tr>
+      <td>
+        <button id="addBtn">등록</button>
+      </td>
+      <td>
+        <button id="modifyBtn">변경</button>
+      </td>
+      <td>
+        <button id="moveBtn">행이동</button>
+      </td>
+    </tr>
+  </table>
+
+  <div id="show">
+    <p><span>Hello</span><button>Click</button></p>
+    <p><span>World</span><button>Click</button></p>
+    <p><span>Good</span><button>Click</button></p>
+    <p>he<b>llo</b></p>
+  </div>
+
+
+
+
+  <div id="show2">
+    <p><span>Hello</span><button>Click</button></p>
+    <p><span>World</span><button>Click</button></p>
+    <p><span>Good</span><button>Click</button></p>
+
+  </div>
+  <table style="display: none;">
+    <tr class="template">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><button>삭제</button></td>
+    </tr>
+  </table>
+
+
+</body>
+
+</html>
