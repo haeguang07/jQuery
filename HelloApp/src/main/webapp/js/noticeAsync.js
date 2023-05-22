@@ -3,11 +3,11 @@ async function loadData(){
   let promise= await fetch('noticeListJson.do');
   let promise1 = await promise.json();
   let fidlds =['noticeId','noticeTitle','noticeWriter','attachFile'];
-  promise.forEach(item => {
+  promise1.forEach(item => {
 
     console.log(item);
     let tr = document.createElement('tr');
-    for(let prop in fidlds){
+    for(let prop of fidlds){
       let td = document.createElement('td');
       td.innerText=item[prop];
       tr.append(td);
