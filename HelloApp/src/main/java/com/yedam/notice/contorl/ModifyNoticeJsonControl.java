@@ -24,8 +24,6 @@ public class ModifyNoticeJsonControl implements Control {
 		String title = req.getParameter("title");
 		String idStr = req.getParameter("id");
 		int id =Integer.parseInt(idStr);
-
-		
 		
 		NoticeVO vo = new NoticeVO();
 		vo.setNoticeId(id);
