@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v04_component1.html</title>
+  <script src="https://unpkg.com/vue@2"></script>
+</head>
+
+<body>
+  <div id="app">
+    <my-comp></my-comp>
+  </div>
+
+
+  <hr>
+
+
+
+  <div id="app2">
+    
+    <p>{{counter}}</p>
+    <button v-on:click="countUp">증가</button>
+    <count-component v-on:child-count="countUp"></count-component>
+
+  </div>
+  <script>
+    Vue.component('my-comp', {
+      template: '<button v-on:click="incrementCounter">{{counter}}</button>',
+      data() {
+        return {
+          counter: 0
+        }
+      },
+      methods: {
+        incrementCounter() {
+          this.counter++;
+        }
+
+      }
+    })
+
+    new Vue({
+      el: '#app'
+
+    })
+
+
+    new Vue({
+      el: '#app2',
+      data: {
+        counter: 1
+      },
+      methods: {
+        countUp:function() {
+          this.counter++;
+        }
+      },
+      components:{
+        'count-component':{
+          template:`
+            <div><button v-on:click="childCountUp">하위요소증가</button></div>
+          `,
+          methods:{
+            childCountUp(){
+              this.$emit('child-count');
+              //console.log(this.$parent.counter++);
+            }
+          }
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

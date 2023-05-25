@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v01_instance1.html</title>
+  <script src="http://unpkg.com/vue@2"></script>
+  
+</head>
+
+<body>
+ 
+  <div id="app">
+    <select v-model="myColor">
+      <option value="">색을 선택하세요</option>
+      <option value="red">red</option>
+      <option value="green">green</option>
+      <option value="blue">blue</option>
+      <option value="orange">orange</option>
+      <option value="yellow">yellow</option>
+    </select>
+    <p v-bind:style="{color:myColor}">선택한 색상은 {{myColor}}</p>
+    <input type="checkbox" v-model="checkBox">동의
+    <button v-bind:disabled="!checkBox">가입</button>
+    <br>
+    <input type="text" v-model="firstVal" v-on:keyup="updateModel()">
+    <input type="text" v-model="LastVal">
+    <p>{{resultVal}}</p>
+  </div>
+  <script>
+    let vm=new Vue({
+      el: '#app',
+      data: {
+        myColor:'',
+        checkBox: false,
+        firstVal:10,
+        LastVal:10,
+        //resultVal: parseInt(this.firstVal) +parseInt(this.lastVal)
+      },
+      computed:{
+        resultVal: function(){
+          return parseInt(this.firstVal) +parseInt(this.LastVal)
+
+        }
+      },
+      methods:{
+        updateModel:function(){
+          console.log(event.keyCode);
+          if(event.keyCode==38|| event.keyCode==39){
+            this.firstVal++;
+          }else if(event.keyCode==40||event.keyCode==37){
+            this.firstVal--;
+          }
+        }
+      },
+      updated: function(){
+        
+        
+      }
+    })
+  </script>
+
+
+  <div id="app2">
+    
+  </div>
+  <script>
+    let vm2 = new Vue({
+      el: '#app2',
+      data: {
+       
+      }
+    })
+  </script>
+
+
+
+
+  <div id="app3">
+
+  </div>
+  <script>
+    let vm3 = new Vue({
+      el: '#app3',
+      data: {
+      },
+      methods: {}
+
+    })
+
+
+
+    class Student {
+      constructor(name, grade) {
+        this.name = name;
+        this.grade = grade;
+      }
+      showName() {
+        return this.name;
+      }
+    }
+    let hong = new Student('Hong', 3)
+    hong.showName();
+  </script>
+</body>
+
+</html>

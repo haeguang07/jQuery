@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v_for_if</title>
+  <script src="http://unpkg.com/vue@2"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h3>짝수 값을 출력</h3>
+    <ul>
+      <template v-for="(num,index) in intArray">
+        <li  v-if="index%2==0">{{num}} - {{index}}</li>
+        <li v-else>짝수번째입니다</li>
+      </template>
+    </ul>
+    <template>
+      <div>
+        <p>Hello</p>
+      </div>
+    </template>
+  </div>
+  <script>
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        intArray: [1, 2, 3, 4, 5, 6]
+      }
+    })
+  </script>
+  <br>
+  <div id="app2">
+    <h3>이벤트을 통한 출력</h3>
+    <ul>
+      <li v-for="num in intArray">{{num}}</li>
+    </ul>
+    <button v-on:click="showEven">짝수만 출력</button>
+    <button v-on:click="orderDesc">내림차순정렬</button>
+    <button v-on:click="orderasc">오름차순정렬</button>
+    <button v-on:click="reset">되돌리기</button>
+  </div>
+  <script>
+    let vm2 = new Vue({
+      el: '#app2',
+      data: {
+        intArray: [1, 2, 3, 4, 5, 6]
+      },
+      methods:{
+        showEven:function(){
+          let newAry=this.intArray.filter(function(num,idx,array){
+            return num%2 ==0;
+          })
+          this.intArray= newAry;
+        },
+        orderDesc: function(){
+          this.intArray.sort((a,b)=>b-a)
+        },
+        orderasc(){
+          this.intArray.sort((a,b)=>a-b)
+        },
+        reset(){
+          this.intArray= [1, 2, 3, 4, 5, 6]
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v01_instance1.html</title>
+  <script src="http://unpkg.com/vue@2"></script>
+</head>
+<body>
+  <div id="app">
+    <p>{{myNum*12}}</p>
+    <p>{{!myBool}}</p>
+    <p>{{myArry[0]}}</p>
+    <p>{{myObj.price}}</p>
+    <p v-for="elm in myArry">{{elm}}</p>
+  </div>
+  <script>
+
+    new Vue({
+      el:'#app',
+      data:{
+        myNum:123,
+        myBool:true,
+        myArry:['다즐링','얼그레이','실론'],
+        myObj:{
+          name:'홍차',price:20000
+        }
+      }
+    })
+  </script>
+  <div id="app2">
+    <img src="images/product-fullsize.png" style="width: 150px;">
+    <img :src="srcName" :style="myStyle">
+    <a :href="myHref">{{linkName}}</a>
+  </div>
+  <script>
+    let vm2=new Vue({
+      el:'#app2',
+      data:{
+        srcName:'images/product-fullsize.png' ,
+        myStyle:{width: '150px',height:'200px'},
+        linkName:'다음',
+        myHref:"http://daum.net"
+      }
+    })
+
+  </script>
+  <div id="app3">
+    <p v-bind:style="myStyle">Hello,World</p>
+    <button v-on:click="changeColor"> changeColor</button>
+  </div>
+  <script>
+    let vm3=new Vue({
+      el:'#app3',
+      data:{
+        myStyle:{color :'red',border:'2px solid blue'}
+      },
+      methods:{
+        changeColor:function(){
+          //this는 Vue객체
+          this.myStyle={color :'green',border:'3px dotted red'}
+          console.log(vm2);
+          vm2.myStyle={width: '200px',height:'150px'};
+        }
+      }
+    })
+
+
+
+    class Student{
+      constructor(name, grade){
+        this.name=name;
+        this.grade=grade;
+      }
+      showName(){
+        return this.name;
+      }
+    }
+    let hong=new Student('Hong',3)
+    hong.showName();
+  </script>
+</body>
+</html>

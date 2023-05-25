@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v-event1</title>
+  <script src="http://unpkg.com/vue@2"></script>
+</head>
+
+<body>
+  <div class="app">
+    <label>이름<input v-model="name"></label>
+    <label>성적<input v-model="score"></label>
+    <button v-on:click="saveScore">저장</button>
+    <button v-on:click="orderasc">이름순정렬</button>
+    <button v-on:click="orderScore">성적순정렬</button>
+    <h3>학생목록</h3>
+    <ul>
+      <li v-for="item in stuents">{{item.name}}/{{item.score}}
+      <span style="display: none;">{{item.num}}</span> <button v-on:click="delStu">삭제</button> </li>
+      <li>평균/{{avg}}</li>
+    </ul>
+  </div>
+
+  <script>
+    let vm = new Vue({
+      el: '.app',
+      data: {
+        name: '',
+        score: '',
+        stuents: [{
+          num:0,
+          name: 'hong',
+          score: 100
+        }],
+        no:0,
+        avg: 100
+      },
+      methods: {
+        saveScore() {
+          if (this.name != '' && this.score != '') {
+            this.stuents.push({
+              num:this.no+1,
+              name: this.name,
+              score: this.score
+            });
+            //this.name='';this.score='';
+            sum = 0;
+            for (stu of this.stuents) {
+              sum += stu.score * 1
+            }
+            this.avg = (sum / this.stuents.length).toFixed(2);
+          }
+        },
+        orderasc() {
+          this.stuents.sort(function (a, b) {
+            let aName = a.name.toUpperCase();
+            let bName = b.name.toUpperCase();
+            if (aName > bName) return 1;
+            if (aName < bName) return -1;
+            if (aName === bName) return 0;
+          })
+         
+
+        },
+        orderScore(){
+          this.stuents.sort((a, b)=> b.score-a.score )
+        },
+        delStu(){
+          let num=event.target.previousElementSibling.innerText
+          for(let i=0;i<this.stuents.length;i++){
+            if(this.stuents[i].num==num){
+              this.stuents.splice(i,1);
+            }
+          }
+        }
+      }
+    })
+  </script>
+
+</body>
+
+</html>
