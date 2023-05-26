@@ -14,61 +14,59 @@
     <p>현재 참여자 수 :{{count}} 명</p>
     <input-component v-on:up-count="countUp"></input-component>
   </div>
-  <script>
-    const InputComponent = {
-      template: `
-        <div>
-          <div class="userAdd">
-            <div class="nameInfo">
-              <label for="userName">이름</label>
-              <input id="userName" v-model="userName">
-            </div>
-            <div class="ageInfo">
-              <label for="userAge">나이</label>
-              <input id="userAge" v-model="userAge">
-            </div>
-            <div class="deptInfo">
-              <label for="userDept">소속</label>
-              <select id = userDept v-model="userDept">
-                <option>학생</option>
-                <option>교사</option>
-              </select>
-            </div>
-            <div class="inputInfo">
-              <h2>등록 예정자 정보</h2>
-              <p> 이름:{{userName}}</p>
-              <p> 나이:{{userAge}}</p>
-              <p> 소속:{{userDept}}</p>
-            </div>
-            <button v-on:click="insertUser">등록</button> 
-          </div>
-          <div class="userInfo">
-            <print-component v-for="(user,idx) in userList" v-bind:userInfo="user" :key="idx">
-              </print-component>
-          </div>
+
+
+  <script type="text/x-template" id="inputTemplate">
+    <div>
+      <div class="userAdd">
+        <div class="nameInfo">
+          <label for="userName">이름</label>
+          <input id="userName" v-model="userName">
         </div>
-      `,
+        <div class="ageInfo">
+          <label for="userAge">나이</label>
+          <input id="userAge" v-model="userAge">
+        </div>
+        <div class="deptInfo">
+          <label for="userDept">소속</label>
+          <select id = userDept v-model="userDept">
+            <option>학생</option>
+            <option>교사</option>
+          </select>
+        </div>
+        <div class="inputInfo">
+          <h2>등록 예정자 정보</h2>
+          <p> 이름:{{userName}}</p>
+          <p> 나이:{{userAge}}</p>
+          <p> 소속:{{userDept}}</p>
+        </div>
+        <button v-on:click="insertUser">등록</button> 
+      </div>
+      <div class="userInfo">
+        <print-component v-for="(user,idx) in userList" v-bind:userInfo="user" :key="idx">
+          </print-component>
+      </div>
+    </div>
+  </script>
+  <script>
+    const PrintComponent = {
+      template: `<div><p> 이름:{{userInfo.name}}, 나이: {{userInfo.age}}, 소속: {{userInfo.dept}}</p></div>`,
+      props: ['userInfo']
+    }
+    const InputComponent = {
+      template: `#inputTemplate`,
       data() {
-        return {
-          userName: '',
-          userAge:0,
-          userDept:'',
-          userList:[{name:'hong',age:20,dept:'학생'}]
+        return { userName: '',userAge: 0,userDept: '',
+          userList: [{ name: 'hong',age: 20,dept: '학생' }]
         }
       },
       methods: {
-        insertUser(){
-          this.userList.push({name:this.userName,age:this.userAge,dept:this.userDept});
+        insertUser() {
+          this.userList.push({name: this.userName, age: this.userAge,dept: this.userDept});
           this.$emit('up-count');
-          
         }
       },
-      components:{
-        'print-component':{
-          template:`<div><p> 이름:{{userInfo.name}}, 나이: {{userInfo.age}}, 소속: {{userInfo.dept}}</p></div>`,
-          props:['userInfo']
-        }
-      }
+      components: {'print-component': PrintComponent}
     }
     // end of InputComponent
 
@@ -76,22 +74,12 @@
     //start Vue
     new Vue({
       el: '#app',
-      data: {
-        count: 1
-      },
+      data: {count: 1},
       methods: {
-        countUp() {
-          this.count++;
-        }
+        countUp() {this.count++;}
       },
-      components: {
-        'input-component': InputComponent
-      }
+      components: {'input-component': InputComponent}
     })
   </script>
-
-
-
 </body>
-
 </html>

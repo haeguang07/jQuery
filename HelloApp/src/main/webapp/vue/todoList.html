@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>todOList.html</title>
+  <script src="http://unpkg.com/vue@2"></script>
+  <style>
+    ul {
+      padding: 0;
+      list-style: none;
+    }
+    .check {
+      text-decoration: line-through;
+      color: lightgray;
+    }
+    input {
+      margin: 2px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>TO DO LIST</h1>
+  <div id="app">
+    <list-component :list="list" v-on:change-stu="changeStu"></list-component>
+    <input-component v-on:insert-list="addList"></input-component>
+    <br>
+    <btn-comonent v-on:delete-check="delCheck" v-on:order-date="orderByDate"></btn-comonent>
+    <count-component :count="checkCount" :total="list.length"></count-component>
+    
+  </div>
+  <script>
+    const ListComponent = {
+      template: `
+       <div>
+        <ul>
+          <li v-for="(item,idx) in list" v-bind:class="{check: item.status}">
+            <label :for="item.no"><input type="checkbox" :id="item.no" v-bind:checked="item.status" v-on:click="changeStu(idx)">
+              {{item.title}} (완료일: {{item.date}})</label>
+          </li>
+        </ul>
+    </div>`,
+      props: ['list'],
+      methods: {
+        changeStu(idx) {
+          this.$emit('change-stu', idx)
+        }
+      }
+    }
+    const InputComponent={
+      template:`
+      <div>
+        <input v-model="title" placeholder="할일">
+        <input v-model="date" v-on:change="addList" placeholder="YYYYMMDD로 입력해주세요">
+      </div>
+      `,
+      data:function(){
+        return {title:'',date:''}
+      },
+      methods:{
+        addList(){
+          if(this.title==''||this.date==''){
+            alert('할일과 완료일을 모두 적어주세요');
+            return;
+          }
+          this.$emit('insert-list',this.title,this.date);
+        }
+      }
+    }
+    const BtnComponent={
+      template:`
+      <div>      
+        <button v-on:click="delCheck">처리완료삭제</button>
+        <button v-on:click="orderByDate">완료일순정렬</button>
+      </div>
+      `,
+      methods:{
+        delCheck(){
+          this.$emit('delete-check')
+        },
+        orderByDate(){
+          this.$emit('order-date')
+        }
+      }
+    }
+    const CountComponent={
+      template:`
+      <div>
+        <p>{{count}} / {{total}}</p>
+        </div>
+      `,
+      props:['count','total']
+    }
+
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        list: [{ no: 1,title: 'bread', date: '20230115',status: false },
+          {no: 2,title: 'coffee', date: '20230415',status: false},
+          {no: 3,title: 'tae',date: '20230215',status: true}
+        ]
+      },
+      methods: {
+        changeStu(idx) {
+          this.list[idx].status = !this.list[idx].status
+        },
+        addList(title,date) {
+          let no = 1;
+          no = parseInt(this.list[this.list.length - 1].no) + 1
+          this.list.push({
+            no: no,
+            title: title,
+            date: date,
+            status: false
+          })
+        },
+        delCheck() {
+          let length = this.list.length;
+          for (let j = 0; j < length; j++) {
+
+            for (let i = 0; i < this.list.length; i++) {
+              if (this.list[i].status) {
+                this.list.splice(i, 1);
+              }
+              console.log(this.list)
+            }
+          }
+        },
+        orderByDate() {
+          this.list.sort((p1, p2) => {
+            if (p1.date < p2.date) return -1;
+            else return 1;
+          })
+        },
+      },
+      computed:{
+        checkCount() {
+          let count = 0;
+          for (let item of this.list) {
+            if (item.status) count++;
+          }
+          return count;
+        }
+      },
+      components: {
+        'list-component': ListComponent,
+        'input-component':InputComponent,
+        'btn-comonent':BtnComponent,
+        'count-component':CountComponent
+      }
+    })
+  </script>
+</body>
+
+</html>

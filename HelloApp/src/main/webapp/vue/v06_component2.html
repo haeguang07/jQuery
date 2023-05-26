@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>v06_component2</title>
+  <script src="http://unpkg.com/vue@2"></script>
+  <style>
+    #list{
+      width: 400px;
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+    #list td, #list th{
+      border: 1px solid black;
+      text-align: center;
+    }
+    #list > thead> tr{
+      color: yellow; background-color: purple;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1>예방접종</h1>
+    <hr>
+    <h3>1차 대상자</h3>
+    <contactlist-component :contacts="list1"></contactlist-component>
+    <h3>2차 대상자</h3>
+    <contactlist-component :contacts="list2"></contactlist-component>
+  </div>
+  <script>
+    const ContactlistComponent ={
+      template:`
+        <div>
+          <table id="list">
+            <thead>
+              <tr>
+                <th>번호</th>
+                <th>이름</th>
+                <th>전화번호</th>
+                <th>주소</th>
+              </tr> 
+            </thead>
+            <tbody>
+              <tr v-for="contact in contacts">
+                <td v-for="value in contact">{{value}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>`,
+      data(){
+        return {
+
+        }
+      },
+      props:['contacts'],
+      methods:{
+
+      }
+    }
+
+
+    var vm=new Vue({
+      el:'#app',
+      data:{
+        list1:[
+          {no: 23, name:'홍길동',tel:'010-1111-2222',address:'대구 100'},
+          {no: 24, name:'김길동',tel:'010-5555-4444',address:'대구 200'},
+          {no: 25, name:'박길동',tel:'010-6666-3333',address:'대구 300'}
+          
+        ],
+        list2:[
+          {no: 26, name:'성춘향',tel:'010-1111-2222',address:'대구 500'},
+          {no: 27, name:'김춘향',tel:'010-5555-4444',address:'대구 600'},
+          {no: 28, name:'박춘향',tel:'010-6666-3333',address:'대구 700'}
+        ]
+      },
+      components:{
+        'contactlist-component':ContactlistComponent
+      }
+    })
+  </script>
+</body>
+</html>
