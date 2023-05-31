@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../../../../../../../../Dev/git/007024"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "webapp"
+	}
+}

@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>todOList.html</title>
+  <title>todoList.html</title>
   <script src="http://unpkg.com/vue@2"></script>
   <style>
     ul {
@@ -138,11 +138,11 @@
       },
       computed:{
         checkCount() {
-          let count = 0;
-          for (let item of this.list) {
-            if (item.status) count++;
-          }
-          return count;
+          let length =this.list.filter(function(item){
+            return item.status
+          }).length
+          
+          return length;
         }
       },
       components: {
