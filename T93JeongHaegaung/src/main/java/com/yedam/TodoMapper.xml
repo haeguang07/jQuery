@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.TodoMapper">
+	<select id="selectToDo" resultType="todo">
+		select * from tbl_todo order by 1 
+	</select>
+	<insert id="insertTodo" parameterType="String">
+		insert into tbl_todo (todo_NO, todo_title)
+		values((select MAX(todo_no)+1 from tbl_todo),#{todoTitle})
+	</insert>
+	<delete id="deleteTodo">
+		delete from tbl_todo where todo_no=#{todoNo}
+	</delete>
+	<update id="updateTodo">
+		update tbl_todo set todo_status=#{status} where todo_no=#{todoNo}
+	</update>
+	<select id="selectMaxNo" resultType="int">
+		select MAX(todo_no) from tbl_todo
+	</select>
+</mapper>
